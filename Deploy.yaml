@@ -1,0 +1,36 @@
+- description: ''
+  executionEnabled: true
+  id: 2565996f-06c6-4354-bcfb-5eb2692f401c
+  loglevel: INFO
+  name: Deploy
+  nodeFilterEditable: true
+  nodefilters:
+    dispatch:
+      excludePrecedence: true
+      keepgoing: false
+      rankOrder: ascending
+      successOnEmptyNodeFilter: true
+      threadcount: 1
+    filter: 'tags: worker'
+  nodesSelectedByDefault: true
+  options:
+  - name: Miljo
+    required: true
+  - name: FrontendBranch
+    required: true
+  - name: FrontendByggNr
+    required: true
+  - name: BackendBranch
+    required: true
+  - name: BackendByggNr
+    required: true
+  scheduleEnabled: true
+  sequence:
+    commands:
+    - description: Pull siste config
+      exec: git --work-tree=/home/rundeck/jz17-compose-files/ --git-dir=/home/rundeck/jz17-compose-files/.git/ pull
+    - exec: /home/rundeck/jz17-compose-files/deploy.sh ${option.Miljo} ${option.FrontendBranch} ${option.FrontendByggNr} ${option.BackendBranch} ${option.BackendByggNr}
+    keepgoing: false
+    strategy: node-first
+  uuid: 2565996f-06c6-4354-bcfb-5eb2692f401c
+
